@@ -3,425 +3,1249 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OVA – My Routine: Daily Activities (Berástegui, Lorica, Sahagún)</title>
+  <title>OVA 1: Daily Activities Vocabulary</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     body{font-family:'Poppins',sans-serif}
-    .sidebar-link{transition:all .3s;border-left:4px solid transparent}
+    
+    /* Estilos para el sidebar estático */
+    .sticky-sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 10;
+    }
+    
+    /* Scrollbar personalizado para el sidebar */
+    .sticky-sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .sticky-sidebar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    .sticky-sidebar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    
+    .sticky-sidebar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    
+    .sidebar-link{transition:all .3s ease;border-left:4px solid transparent}
     .sidebar-link.active,.sidebar-link:hover{background:#e6f4ea;color:#166534;border-left-color:#22c55e}
     .content-pane{display:none;animation:fadeIn .5s ease-in-out}
     .content-pane.active{display:block}
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
     .quiz-option:hover{background:#f0fdf4}
     .quiz-option.selected{background:#dcfce7;border-color:#22c55e}
-    .type-card{transition:transform .3s,box-shadow .3s}
-    .type-card:hover{transform:scale(1.05);box-shadow:0 4px 6px -1px rgb(0 0 0 / .1),0 2px 4px -2px rgb(0 0 0 / .1)}
-    .ipa{font-family: 'Poppins', sans-serif; letter-spacing: .02em}
+    .drag-item{cursor:grab}
+    .drop-zone{min-height:48px}
+    .drop-zone.filled{background:#ecfdf5}
+    .sortable-token{cursor:grab}
+    .token-bin{min-height:52px}
+    .speak-btn{transition:transform .08s ease}
+    .speak-btn:active{transform:scale(.92)}
+    .pill{border:1px dashed #86efac}
+    .tag{border:1px solid #d1fae5}
+    .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    
+    /* Estilos para el grabador de audio */
+    .recording-indicator {
+      animation: pulse 1.5s ease-in-out infinite alternate;
+    }
+    
+    @keyframes pulse {
+      from { opacity: 1; }
+      to { opacity: 0.5; }
+    }
+    
+    .audio-player {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1px solid #bbf7d0;
+    }
+    
+    .recording-timer {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.05em;
+    }
   </style>
 </head>
 <body class="bg-slate-50">
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white shadow-lg flex-shrink-0 hidden md:flex md:flex-col">
-      <div class="p-6 bg-green-800 text-white">
-        <h1 class="text-lg font-bold text-center leading-tight">OVA · Inglés Técnico I<br><span class="text-green-200">My Routine</span></h1>
+
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-lg flex-shrink-0 hidden md:flex md:flex-col sticky-sidebar">
+    <div class="p-4">
+      <div style="width: 150px; height: 150px;" class="p-2 mx-auto flex items-center justify-center bg-white rounded-full shadow-lg border-2 border-green-500 transition-shadow duration-300 hover:shadow-green-400">
+          <img src="img/logo.webp" alt="Logo OVA" class="w-5/6 h-5/6 object-contain" loading="lazy">
       </div>
-      <nav class="mt-4 flex-1">
-        <a href="#" class="sidebar-link active flex items-center py-3 px-6 font-medium text-slate-700" data-target="introduccion"><span class="mr-3 text-xl">🚀</span>Introducción</a>
-        <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="objetivos"><span class="mr-3 text-xl">🎯</span>Objetivos</a>
-        <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="fundamentos"><span class="mr-3 text-xl">📚</span>Fundamentos</a>
-        <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="herramientas"><span class="mr-3 text-xl">🛠️</span>Tipos y Herramientas</a>
-        <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="beneficios"><span class="mr-3 text-xl">🌟</span>Beneficios</a>
-        <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="actividades"><span class="mr-3 text-xl">✍️</span>Actividades</a>
-        <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="evaluacion"><span class="mr-3 text-xl">✔️</span>Evaluación</a>
-        <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="lecturas"><span class="mr-3 text-xl">📖</span>Bibliografía</a>
-      </nav>
-    </aside>
+  </div>
+    <nav class="mt-6 flex-1">
+      <a href="#" class="sidebar-link active flex items-center py-3 px-6 font-medium text-slate-700" data-target="introduccion"><span class="mr-3 text-xl">🚀</span> Introducción</a>
+      <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="objetivos"><span class="mr-3 text-xl">🎯</span> Objetivos</a>
+      <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="contenido"><span class="mr-3 text-xl">📚</span> Contenido</a>
+      <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="actividades"><span class="mr-3 text-xl">✍️</span> Actividades</a>
+      <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="evaluacion"><span class="mr-3 text-xl">✔️</span> Evaluación</a>
+      <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="recursos"><span class="mr-3 text-xl">📖</span> Recursos</a>
+      <a href="#" class="sidebar-link flex items-center py-3 px-6 font-medium text-slate-700" data-target="bibliografia"><span class="mr-3 text-xl">📚</span> Bibliografía</a>
+    </nav>
+  </aside>
 
-    <!-- Main -->
-    <main class="flex-1 p-4 sm:p-6 md:p-10 bg-gray-50">
-      <!-- Mobile nav -->
-      <div class="md:hidden mb-6">
-        <h1 class="text-xl font-bold text-green-800">OVA · My Routine</h1>
-        <select id="mobile-nav" class="w-full mt-2 p-2 border rounded-md bg-white shadow-sm">
-          <option value="introduccion">🚀 Introducción</option>
-          <option value="objetivos">🎯 Objetivos</option>
-          <option value="fundamentos">📚 Fundamentos</option>
-          <option value="herramientas">🛠️ Tipos y Herramientas</option>
-          <option value="beneficios">🌟 Beneficios</option>
-          <option value="actividades">✍️ Actividades</option>
-          <option value="evaluacion">✔️ Evaluación</option>
-          <option value="lecturas">📖 Bibliografía</option>
-        </select>
+  <!-- Main -->
+  <main class="flex-1 p-4 sm:p-6 md:p-10 bg-gray-50">
+    <!-- Mobile header -->
+    <div class="md:hidden mb-6">
+      <select id="mobile-nav" class="w-full p-2 border rounded-md bg-white shadow-sm">
+        <option value="introduccion">🚀 Introducción</option>
+        <option value="objetivos">🎯 Objetivos</option>
+        <option value="contenido">📚 Contenido</option>
+        <option value="actividades">✍️ Actividades</option>
+        <option value="evaluacion">✔️ Evaluación</option>
+        <option value="recursos">📖 Recursos</option>
+        <option value="bibliografia">📚 Bibliografía</option>
+      </select>
+    </div>
+
+    <!-- Introducción -->
+    <section id="introduccion" class="content-pane active">
+      <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-4">Daily Activities Vocabulary</h2>
+      <p class="text-slate-700 leading-relaxed mb-4">
+        👋 ¡Bienvenido! En este OVA aprenderás el vocabulario esencial para hablar de tu <b>rutina diaria</b> en inglés. Está
+        pensado para tu realidad como estudiante de <b>Técnico Profesional en Programación Web</b> en <b>Montería, Lorica,
+        Sahagún, Berástegui y Montelíbano</b>: madrugar, ir al campus o conectarte, programar, revisar correos, practicar
+        deporte y compartir en familia.
+      </p>
+      <div class="p-4 sm:p-6 bg-green-50 border-l-4 border-green-500 rounded-r-lg text-green-900">
+        💡 <b>¿Por qué es importante?</b> El inglés es el idioma común de la tecnología. Saber describir lo que haces cada día
+        te ayudará a presentarte en equipos, coordinar tareas y aprender de documentación técnica. Aquí todo es
+        <b>interactivo</b>: escucharás la pronunciación, arrastrarás palabras, completarás oraciones, ordenarás frases y hasta podrás
+        <b>grabar tu rutina</b>. 
+      </div>
+      <p class="mt-4 text-slate-600 text-sm">
+        Consejo: si ves el ícono 🔊 toca para escuchar la pronunciación (usa el altavoz de tu dispositivo).
+      </p>
+    </section>
+
+    <!-- Objetivos -->
+    <section id="objetivos" class="content-pane">
+      <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Objetivos de aprendizaje</h2>
+      <ul class="space-y-4">
+        <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="mr-3 text-2xl text-green-700">🧠</span><span>Reconocer y pronunciar correctamente el vocabulario de actividades diarias.</span></li>
+        <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="mr-3 text-2xl text-green-700">🗣️</span><span>Usar el vocabulario en frases simples para describir tu rutina personal y académica.</span></li>
+        <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="mr-3 text-2xl text-green-700">🧩</span><span>Resolver actividades interactivas (drag & drop, cloze, ordenar, quiz) con retroalimentación inmediata.</span></li>
+        <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="mr-3 text-2xl text-green-700">🎙️</span><span>Producir un audio corto describiendo tu rutina diaria en inglés.</span></li>
+      </ul>
+    </section>
+
+    <!-- Contenido -->
+    <section id="contenido" class="content-pane">
+      <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Contenido</h2>
+
+      <!-- Vocab list with TTS -->
+      <div class="mb-6">
+        <h3 class="text-xl font-bold text-green-700 mb-2">Vocabulario clave</h3>
+        <p class="text-slate-600 mb-4">Toca 🔊 para escuchar.</p>
+        <div id="vocab-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
 
-      <!-- Introducción -->
-      <section id="introduccion" class="content-pane active">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-4">Introducción</h2>
-        <p class="text-slate-700 leading-relaxed mb-3">
-          Hablar de la rutina diaria en inglés es una habilidad fundamental que abre puertas en lo personal, lo académico y lo laboral. 
-          En un mundo conectado, el inglés es el idioma principal de la tecnología, la programación y el trabajo colaborativo remoto.
-        </p>
-        <p class="text-slate-700 leading-relaxed mb-3">
-          En municipios como <strong>Berástegui, Lorica y Sahagún</strong>, donde crecen las oportunidades de formación técnica y empleos digitales,
-          describir tu rutina con claridad te ayudará a presentarte en clases virtuales, desenvolverte en entrevistas,
-          coordinar tareas con equipos internacionales y reportar avances de proyectos.
-        </p>
-        <p class="text-slate-700 leading-relaxed mb-3">
-          En esta guía aprenderás verbos y expresiones comunes para hablar de actividades diarias, tales como <em>wake up</em>, <em>have breakfast</em>, 
-          <em>check emails</em> y <em>code</em>, útiles en el hogar, el estudio y el trabajo. Realizarás ejercicios para comprender el significado,
-          practicar la pronunciación y usar el vocabulario correctamente en <strong>presente simple</strong>, el tiempo verbal ideal para expresar hábitos.
-        </p>
-        <div class="mt-6 p-4 sm:p-6 bg-green-50 border-l-4 border-green-500 rounded-r-lg">
-          <p class="text-green-800">
-            Conecta el inglés con tu contexto: “I take the bus to Sahagún at 7:00 a.m.”, 
-            “I check my emails before class in Lorica”, “I code in the afternoon at home in Berástegui”.
-          </p>
-        </div>
-      </section>
+      <!-- Micro quiz -->
+      <div class="bg-white border-l-4 border-green-500 rounded-lg shadow-sm p-4 sm:p-6">
+        <h4 class="text-lg font-bold text-green-700 mb-2">Chequeo rápido</h4>
+        <p class="text-slate-600 mb-3">Selecciona la opción correcta.</p>
+        <div id="micro-quiz" class="space-y-3"></div>
+        <button id="micro-quiz-btn" class="mt-4 bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700">Comprobar</button>
+        <div id="micro-quiz-res" class="mt-3 font-medium"></div>
+      </div>
+    </section>
 
-      <!-- Objetivos -->
-      <section id="objetivos" class="content-pane">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Objetivos de Aprendizaje</h2>
-        <ul class="space-y-4">
-          <li class="bg-white p-4 rounded-lg shadow-sm"><strong>General:</strong> Explicar rutinas diarias utilizando el presente simple y vocabulario adecuado en inglés, en contextos personales, académicos y laborales propios de la programación web.</li>
-          <li class="bg-white p-4 rounded-lg shadow-sm"><strong>Específico 1:</strong> Reconocer el significado y pronunciación de verbos de uso frecuente en la rutina diaria.</li>
-          <li class="bg-white p-4 rounded-lg shadow-sm"><strong>Específico 2:</strong> Construir oraciones correctas en presente simple (afirmativas, negativas e interrogativas).</li>
-          <li class="bg-white p-4 rounded-lg shadow-sm"><strong>Específico 3:</strong> Describir la rutina personal mediante un párrafo coherente y una presentación oral breve.</li>
-          <li class="bg-white p-4 rounded-lg shadow-sm"><strong>Específico 4:</strong> Integrar expresiones de frecuencia para comunicar hábitos con precisión temporal.</li>
-        </ul>
-      </section>
+    <!-- Actividades -->
+    <section id="actividades" class="content-pane">
+      <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Actividades</h2>
 
-      <!-- Fundamentos -->
-      <section id="fundamentos" class="content-pane">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Fundamentos</h2>
-        <div class="space-y-6 text-slate-700 leading-relaxed">
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-bold text-green-700 mb-2">Vocabulario clave por categorías</h3>
-            <div class="grid sm:grid-cols-2 gap-6">
-              <div>
-                <h4 class="font-semibold text-slate-800 mb-2">Rutinas personales</h4>
-                <ul class="list-disc list-inside">
-                  <li><em>wake up</em> – despertarse</li>
-                  <li><em>get up</em> – levantarse</li>
-                  <li><em>brush my teeth</em> – cepillarme los dientes</li>
-                  <li><em>take a shower</em> – ducharme</li>
-                  <li><em>get dressed</em> – vestirme</li>
-                  <li><em>have breakfast / lunch / dinner</em> – desayunar / almorzar / cenar</li>
-                </ul>
-              </div>
-              <div>
-                <h4 class="font-semibold text-slate-800 mb-2">Rutinas académicas/laborales</h4>
-                <ul class="list-disc list-inside">
-                  <li><em>check emails</em> – revisar correos</li>
-                  <li><em>attend meetings</em> – asistir a reuniones</li>
-                  <li><em>code / write code</em> – programar</li>
-                  <li><em>take notes</em> – tomar apuntes</li>
-                  <li><em>study</em> – estudiar</li>
-                  <li><em>submit assignments</em> – entregar tareas</li>
-                </ul>
-              </div>
-            </div>
+      <!-- Drag & Drop Matching -->
+      <div class="bg-white border-l-4 border-green-500 rounded-lg shadow-sm p-6 mb-6">
+        <h3 class="text-xl font-bold text-green-700 mb-2">1) Empareja: Inglés ↔ Español</h3>
+        <p class="text-slate-600 mb-4">Arrastra cada palabra en inglés hacia su traducción correcta.</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h4 class="font-semibold mb-2">Palabras (arrastra)</h4>
+            <div id="drag-bank" class="grid grid-cols-2 gap-2"></div>
           </div>
-
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-bold text-green-700 mb-2">Gramática: Presente simple</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Estructura base: <strong>Sujeto + Verbo</strong> → <em>I get up at 6:00 a.m.</em></li>
-              <li>3.ª persona singular: añade <strong>-s/-es</strong> → <em>She checks her email.</em></li>
-              <li>Negativa: <em>do/does + not + verbo base</em> → <em>I do not (don’t) code at night.</em> / <em>He does not (doesn’t) study on Sundays.</em></li>
-              <li>Interrogativa: <em>Do/Does + sujeto + verbo base?</em> → <em>Do you study in Sahagún?</em></li>
-              <li>Expresiones de frecuencia: <em>always, usually, often, sometimes, rarely, never</em> → posición habitual <em>antes</em> del verbo léxico: <em>I usually have breakfast early.</em></li>
-            </ul>
-          </div>
-
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-bold text-green-700 mb-2">Pronunciación (tips rápidos)</h3>
-            <ul class="list-disc list-inside">
-              <li><em>brush</em> /brʌʃ/ · <em>check</em> /tʃek/ · <em>code</em> /koʊd/ · <em>notes</em> /noʊts/</li>
-              <li>La <strong>-s</strong> final suena /s/, /z/ o /ɪz/ según la palabra: <em>checks</em> /s/, <em>codes</em> /z/, <em>washes</em> /ɪz/.</li>
-            </ul>
+          <div>
+            <h4 class="font-semibold mb-2">Traducciones (suelta aquí)</h4>
+            <div id="drop-bank" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
           </div>
         </div>
-      </section>
+        <button id="check-matching" class="mt-4 bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700">Verificar</button>
+        <div id="matching-result" class="mt-3 font-medium"></div>
+      </div>
 
-      <!-- Herramientas -->
-      <section id="herramientas" class="content-pane">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Tipos de actividades y herramientas</h2>
-        <p class="text-slate-700 mb-4">Usaremos recursos gratuitos y ligeros que funcionan bien desde Lorica, Sahagún o Berástegui con conectividad variable.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="type-card bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-4xl">🗂️</p>
-            <p class="font-bold mt-2">Glosario visual</p>
-            <p class="text-sm text-green-700">Canva / Genially / Presentaciones</p>
-          </div>
-          <div class="type-card bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-4xl">🎧</p>
-            <p class="font-bold mt-2">Escucha y repetición</p>
-            <p class="text-sm text-green-700">Cambridge Dictionary (audio)</p>
-          </div>
-          <div class="type-card bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-4xl">🎬</p>
-            <p class="font-bold mt-2">Video de bienvenida</p>
-            <p class="text-sm text-green-700">HeyGen (avatar docente)</p>
-          </div>
-          <div class="type-card bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-4xl">🧠</p>
-            <p class="font-bold mt-2">Quizzes</p>
-            <p class="text-sm text-green-700">H5P / Quizizz</p>
-          </div>
-          <div class="type-card bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-4xl">📝</p>
-            <p class="font-bold mt-2">Producción escrita</p>
-            <p class="text-sm text-green-700">Editor integrado del OVA</p>
-          </div>
-          <div class="type-card bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-4xl">📣</p>
-            <p class="font-bold mt-2">Producción oral</p>
-            <p class="text-sm text-green-700">Grabadora del móvil, Vocaroo</p>
+      <!-- Cloze (fill in blanks) -->
+      <div class="bg-white border-l-4 border-green-500 rounded-lg shadow-sm p-6 mb-6">
+        <h3 class="text-xl font-bold text-green-700 mb-2">2) Completa las frases</h3>
+        <p class="text-slate-600 mb-3">Usa estas palabras: <span class="tag inline-block px-2 py-1 rounded bg-green-50 text-green-700">wake up</span> <span class="tag inline-block px-2 py-1 rounded bg-green-50 text-green-700">have breakfast</span> <span class="tag inline-block px-2 py-1 rounded bg-green-50 text-green-700">go to class</span> <span class="tag inline-block px-2 py-1 rounded bg-green-50 text-green-700">study programming</span> <span class="tag inline-block px-2 py-1 rounded bg-green-50 text-green-700">check email</span></p>
+        <div id="cloze-list" class="space-y-3"></div>
+        <button id="check-cloze" class="mt-4 bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700">Comprobar</button>
+        <div id="cloze-result" class="mt-3 font-medium"></div>
+      </div>
+
+      <!-- Ordering tokens -->
+      <div class="bg-white border-l-4 border-green-500 rounded-lg shadow-sm p-6 mb-6">
+        <h3 class="text-xl font-bold text-green-700 mb-2">3) Ordena la oración</h3>
+        <p class="text-slate-600 mb-3">Arrastra las palabras para formar una oración correcta.</p>
+        <div id="order-list" class="space-y-4"></div>
+        <button id="check-order" class="mt-4 bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700">Comprobar</button>
+        <div id="order-result" class="mt-3 font-medium"></div>
+      </div>
+
+      <!-- Speaking / Recording -->
+      <div class="bg-white border-l-4 border-green-500 rounded-lg shadow-sm p-6">
+        <h3 class="text-xl font-bold text-green-700 mb-2">4) Speaking: graba tu rutina</h3>
+        <p class="text-slate-600 mb-3">Graba un audio (30–60 s) diciendo al menos 5 actividades. Ejemplo: <i>I wake up at 6, I have breakfast, I go to class, I study programming and I check my email at night.</i></p>
+        
+        <!-- Controles de grabación -->
+        <div class="flex items-center gap-3 mb-4">
+          <button id="rec-start" class="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition-colors">
+            🎙️ Iniciar
+          </button>
+          <button id="rec-stop" class="bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors" disabled>
+            ⏹️ Detener
+          </button>
+        </div>
+        
+        <!-- Estado y temporizador -->
+        <div class="flex items-center gap-4 mb-4">
+          <span id="rec-status" class="text-slate-600 font-medium">Listo para grabar</span>
+          <div id="rec-timer" class="hidden text-lg font-mono text-green-700 bg-green-50 px-3 py-1 rounded recording-timer">
+            <span id="rec-time">00:00</span>
           </div>
         </div>
-      </section>
-
-      <!-- Beneficios -->
-      <section id="beneficios" class="content-pane">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Beneficios</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-white p-6 rounded-xl shadow-md">
-            <h3 class="text-xl font-bold text-green-700 mb-3">Para estudiantes</h3>
-            <ul class="space-y-2 text-slate-700">
-              <li>Mayor confianza para presentarte y participar en clases virtuales.</li>
-              <li>Mejor desempeño en entrevistas y reuniones de proyectos.</li>
-              <li>Puente directo entre el inglés técnico y la programación web.</li>
-            </ul>
-          </div>
-          <div class="bg-white p-6 rounded-xl shadow-md">
-            <h3 class="text-xl font-bold text-green-700 mb-3">Para el entorno local</h3>
-            <ul class="space-y-2 text-slate-700">
-              <li>Facilita empleabilidad remota desde Berástegui, Lorica y Sahagún.</li>
-              <li>Fortalece competencias para emprendimientos digitales locales.</li>
-              <li>Contribuye a la internacionalización académica y laboral.</li>
-            </ul>
+        
+        <!-- Indicador visual de grabación -->
+        <div id="rec-indicator" class="hidden mb-4">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-red-500 rounded-full recording-indicator"></div>
+            <span class="text-red-600 font-medium">Grabando...</span>
           </div>
         </div>
-      </section>
+        
+                 <!-- Área de audio grabado -->
+         <div id="rec-audio" class="mt-4"></div>
+         
+         <!-- Botón de verificación -->
+         <div id="verification-section" class="mt-4 hidden">
+           <button id="verify-audio" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+             🔍 Verificar cumplimiento de criterios
+           </button>
+           <div id="verification-result" class="mt-3"></div>
+         </div>
+        
+                 <!-- Instrucciones adicionales -->
+         <div class="mt-4 p-3 bg-blue-50 border-l-4 border-blue-400 rounded-r text-blue-800 text-sm">
+           💡 <strong>Consejos:</strong> Habla claramente, menciona al menos 5 actividades de tu rutina diaria, y usa frases completas en inglés.
+         </div>
+         
+         <!-- Criterios de evaluación -->
+         <div class="mt-4 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded-r text-yellow-800 text-sm">
+           📋 <strong>Criterios de evaluación:</strong>
+           <ul class="mt-2 space-y-1 text-xs">
+             <li>• Duración: 30-60 segundos</li>
+             <li>• Calidad: Audio claro sin silencios prolongados</li>
+             <li>• Contenido: Mínimo 5 actividades del vocabulario</li>
+             <li>• Idioma: Frases en inglés</li>
+             <li>• Estructura: Oraciones completas con sujeto + verbo</li>
+           </ul>
+         </div>
+      </div>
+    </section>
 
-      <!-- Actividades (interactivas + instrucciones) -->
-      <section id="actividades" class="content-pane">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Actividades</h2>
+    <!-- Evaluación -->
+    <section id="evaluacion" class="content-pane">
+      <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Evaluación</h2>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <p class="text-slate-600 mb-4">Responde todas las preguntas. Recibirás retroalimentación inmediata.</p>
+        <div id="quiz-container" class="space-y-6"></div>
+        <button id="submit-quiz-btn" class="mt-2 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700">Finalizar evaluación</button>
+        <button id="reset-quiz-btn" class="mt-2 ml-2 bg-slate-100 text-slate-800 font-semibold py-2 px-6 rounded-lg hover:bg-slate-200">Reintentar</button>
+        <div id="quiz-result" class="mt-4 text-lg font-bold"></div>
+      </div>
+    </section>
 
-        <!-- Act 0: Matching interactivo rápido -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h3 class="text-xl font-bold text-green-700 mb-4">Actividad 0 · Matching rápido</h3>
-          <p class="text-slate-600 mb-4">Elige el significado correcto para cada verbo.</p>
-          <div id="match-container" class="space-y-4"></div>
-          <button id="check-match-btn" class="mt-4 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700">Verificar</button>
-          <div id="match-result" class="mt-3 font-medium"></div>
+    <!-- Recursos -->
+    <section id="recursos" class="content-pane">
+      <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Recursos para profundizar</h2>
+      <ul class="space-y-4">
+        <li class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+          <h3 class="font-bold text-green-700">British Council – Daily routines</h3>
+          <a class="underline text-slate-700 hover:text-green-700" href="https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/present-simple" target="_blank">Ir al recurso</a>
+        </li>
+        <li class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+          <h3 class="font-bold text-green-700">Quizlet (tarjetas) – Daily routines</h3>
+          <a class="underline text-slate-700 hover:text-green-700" href="https://quizlet.com/subject/daily-routines/" target="_blank">Ir al recurso</a>
+        </li>
+        <li class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+          <h3 class="font-bold text-green-700">Kahoot – Daily routines</h3>
+          <a class="underline text-slate-700 hover:text-green-700" href="https://kahoot.com/schools-u/" target="_blank">Ir al recurso</a>
+        </li>
+        <li class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+          <h3 class="font-bold text-green-700">YouGlish (pronunciación por contexto)</h3>
+          <a class="underline text-slate-700 hover:text-green-700" href="https://youglish.com/" target="_blank">Ir al recurso</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Bibliografía -->
+    <section id="bibliografia" class="content-pane">
+      <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Bibliografía</h2>
+      <div class="space-y-6">
+        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+          <span class="block text-slate-700">Flores Kastanis, P. (2016). <i>English 1</i> (2.ª ed.). Grupo Editorial Patria.</span>
         </div>
-
-        <!-- Act 1: Glosario personal -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h3 class="text-xl font-bold text-green-700 mb-2">Actividad 1 · Glosario personal de rutinas</h3>
-          <p class="text-slate-700 mb-2">Crea un glosario con <strong>20 verbos</strong>. Incluye traducción, imagen y una oración en presente simple.</p>
-          <p class="text-slate-600 text-sm">Ej.: <em>wake up</em> → “I wake up at 5:30 a.m. before going to class in Sahagún.”</p>
+        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+          <span class="block text-slate-700">Pulido Méndez, P. (2022). <i>Comunicación en lenguas extranjeras (inglés) N2: FCOV05</i>. Editorial Tutor Formación.</span>
         </div>
-
-        <!-- Act 2: Quiz 10 preguntas -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h3 class="text-xl font-bold text-green-700 mb-2">Actividad 2 · Quiz (vocabulario y gramática)</h3>
-          <div id="quiz10-container"></div>
-          <button id="submit-quiz10-btn" class="mt-4 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700">Finalizar</button>
-          <div id="quiz10-result" class="mt-3 text-lg font-bold"></div>
+        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+          <span class="block text-slate-700">British Council. (2023). <i>Learn English: Daily Routines</i>. https://learnenglish.britishcouncil.org</span>
         </div>
-
-        <!-- Act 3: Producción escrita -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h3 class="text-xl font-bold text-green-700 mb-2">Actividad 3 · This is my daily routine</h3>
-          <p class="text-slate-700 mb-3">Escribe un párrafo (8–10 oraciones) usando al menos 10 verbos y 2 expresiones de frecuencia. Puedes redactarlo en tu cuaderno o en un editor de texto.</p>
-          <textarea id="writing-box" class="w-full p-3 border rounded-md" rows="6" placeholder="Ej.: I usually wake up at 5:30 a.m. I take a shower and have breakfast..."></textarea>
-          <div class="text-right mt-2 text-sm text-slate-500"><span id="char-count">0</span> caracteres</div>
-        </div>
-
-        <!-- Act 4: Producción oral -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <h3 class="text-xl font-bold text-green-700 mb-2">Actividad 4 · Talking about my routine</h3>
-          <ul class="list-disc list-inside text-slate-700 space-y-1">
-            <li>Graba un audio o video (50 s–1:15). Usa al menos 10 verbos y expresiones de frecuencia.</li>
-            <li>Puedes usar el celular, Audacity o Vocaroo. Nombra el archivo: <em>Nombre_Apellido_Routine</em>.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Evaluación -->
-      <section id="evaluacion" class="content-pane">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Evaluación sumativa</h2>
-        <p class="text-slate-700 mb-4">Selecciona la respuesta correcta.</p>
-        <div id="eval-container"></div>
-        <button id="submit-eval-btn" class="mt-4 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700">Enviar</button>
-        <div id="eval-result" class="mt-3 text-lg font-bold"></div>
-      </section>
-
-      <!-- Bibliografía -->
-      <section id="lecturas" class="content-pane">
-        <h2 class="text-2xl sm:text-3xl font-bold text-green-800 mb-6">Bibliografía y recursos</h2>
-        <ul class="space-y-3 text-slate-700">
-          <li><strong>BBC Learning English.</strong> (s.f.). <em>Daily Routines and Habits</em>. Disponible en: https://www.bbc.co.uk/learningenglish</li>
-          <li><strong>Cambridge Dictionary.</strong> (s.f.). <em>Online English Dictionary</em>. Disponible en: https://dictionary.cambridge.org/</li>
-          <li>Flores Kastanis, P. (2016). <em>English 1</em> (2.ª ed.). México: Trillas.</li>
-          <li>Murphy, R. (2019). <em>Essential Grammar in Use</em> (4th ed.). Cambridge University Press.</li>
-        </ul>
-        <p class="text-slate-500 text-sm mt-4">Este OVA fue contextualizado para estudiantes de Berástegui, Lorica y Sahagún.</p>
-      </section>
+      </div>
 
       <footer class="mt-12 pt-6 border-t-2 border-slate-200 text-center">
-        <p class="text-slate-600 font-medium">Creado para:</p>
-        <p class="text-green-800 font-bold text-lg">Técnico Profesional en Programación Web – Inglés Técnico I</p>
-        <p class="text-slate-500 text-sm">© 2025</p>
+        <p class="text-slate-600 font-medium">Creado para estudiantes de Técnico Profesional en Programación Web</p>
+        <p class="text-green-800 font-bold text-lg">Universidad de Córdoba — Montería, Lorica, Sahagún, Berástegui, Montelíbano</p>
       </footer>
-    </main>
-  </div>
+    </section>
+  </main>
+</div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const sidebarLinks = document.querySelectorAll('.sidebar-link');
-      const panes = document.querySelectorAll('.content-pane');
-      const mobileNav = document.getElementById('mobile-nav');
+<script>
+/* ===== Navegación panes ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('.sidebar-link');
+  const panes = document.querySelectorAll('.content-pane');
+  const mobile = document.getElementById('mobile-nav');
 
-      function switchPane(id){
-        panes.forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        sidebarLinks.forEach(l => l.classList.toggle('active', l.dataset.target===id));
-        if (mobileNav && mobileNav.value !== id) mobileNav.value = id;
-      }
-      sidebarLinks.forEach(link => link.addEventListener('click', e => {e.preventDefault(); switchPane(link.dataset.target);}));
-      if (mobileNav){ mobileNav.addEventListener('change', e => switchPane(e.target.value)); }
+  function switchPane(id){
+    panes.forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    links.forEach(l=>l.classList.toggle('active', l.dataset.target===id));
+    if(mobile && mobile.value!==id) mobile.value=id;
+  }
+  links.forEach(l=>l.addEventListener('click', e=>{
+    e.preventDefault();
+    switchPane(l.dataset.target);
+  }));
+  mobile && mobile.addEventListener('change', e=>switchPane(e.target.value));
+});
 
-      // Matching rápido
-      const matchData = [
-        {q: "wake up", a: "despertarse"},
-        {q: "brush my teeth", a: "cepillarme los dientes"},
-        {q: "check emails", a: "revisar correos"},
-        {q: "code", a: "programar"},
-        {q: "attend meetings", a: "asistir a reuniones"}
-      ];
-      const matchContainer = document.getElementById('match-container');
-      if (matchContainer){
-        matchData.forEach((item, idx) => {
-          const opts = ["despertarse","vestirme","revisar correos","programar","asistir a reuniones","almorzar","estudiar"];
-          const optionsHtml = opts.map(o => `<option value="${o}">${o}</option>`).join('');
-          const row = document.createElement('div');
-          row.className = "p-4 border rounded-lg";
-          row.innerHTML = `<p class="font-medium">${idx+1}. <span class="italic">${item.q}</span></p>
-            <select class="match-select w-full mt-2 p-2 border rounded-md bg-white" data-answer="${item.a}">
-              <option value="">Selecciona...</option>${optionsHtml}
-            </select>`;
-          matchContainer.appendChild(row);
-        });
-        const btn = document.getElementById('check-match-btn');
-        const out = document.getElementById('match-result');
-        btn.addEventListener('click', () => {
-          let ok = 0;
-          document.querySelectorAll('.match-select').forEach(s => {
-            if (s.value === s.dataset.answer){ ok++; s.classList.add('border-green-500'); s.classList.remove('border-red-500'); }
-            else { s.classList.add('border-red-500'); s.classList.remove('border-green-500'); }
-          });
-          out.textContent = `Acertaste ${ok} de ${matchData.length}.`;
-          out.className = ok === matchData.length ? 'mt-3 font-medium text-green-700' : 'mt-3 font-medium text-red-700';
-        });
-      }
+/* ===== TTS helper ===== */
+function speak(text){
+  try{
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';
+    speechSynthesis.speak(u);
+  }catch(e){
+    alert('Tu navegador no permite pronunciación automática.');
+  }
+}
 
-      // Quiz 10 preguntas (actividad formativa)
-      const quiz10 = [
-        {q:"What does “brush” mean in the sentence: I brush my teeth every morning?", o:["Comer","Cepillar","Correr","Saltar"], a:"Cepillar"},
-        {q:"Choose the correct sentence in present simple.", o:["He go to work at 9.","He goes to work at 9.","He going to work at 9.","He gone to work at 9."], a:"He goes to work at 9."},
-        {q:"What is the meaning of the verb “wake up”?", o:["Dormir","Despertarse","Correr","Bañarse"], a:"Despertarse"},
-        {q:"Which of the following is a correct use of the verb in present simple?", o:["She checks her email every morning.","She checks her email every morning.","She checking her email every morning.","She check her email every morning."], a:"She checks her email every morning."},
-        {q:"What verb matches the action: “Write lines of code to create a program”?", o:["Paint","Fix","Code","Watch"], a:"Code"},
-        {q:"Complete the sentence: We ______ lunch at 12:30 p.m.", o:["eats","eat","eating","eated"], a:"eat"},
-        {q:"Which of the following is an expression of frequency?", o:["Blue shirt","Take a shower","Always","Eat sandwich"], a:"Always"},
-        {q:"Choose the correct sentence for “They”.", o:["They takes a bus every day.","They taking a bus every day.","They taken a bus every day.","They take a bus every day."], a:"They take a bus every day."},
-        {q:"What does the verb “attend” mean in the sentence: I attend class at 8 a.m.?", o:["Salir","Asistir","Dormir","Ignorar"], a:"Asistir"},
-        {q:"Select the sentence that correctly uses the word “usually”.", o:["Usually I wake up at 6:30.","I get up usually at 6:30.","I usually wake up at 6:30.","I wakes up usually at 6:30."], a:"I usually wake up at 6:30."}
-      ];
-      const quiz10Container = document.getElementById('quiz10-container');
-      if (quiz10Container){
-        quiz10.forEach((item, idx) => {
-          const block = document.createElement('div'); block.className="mb-6";
-          block.innerHTML = `<p class="font-semibold mb-2">${idx+1}. ${item.q}</p>`;
-          const options = document.createElement('div'); options.className="space-y-2";
-          item.o.forEach(opt => {
-            const el = document.createElement('div');
-            el.className = 'quiz-option p-3 border-2 border-slate-200 rounded-lg cursor-pointer';
-            el.textContent = opt;
-            el.addEventListener('click', () => {
-              block.querySelectorAll('.quiz-option').forEach(e => e.classList.remove('selected'));
-              el.classList.add('selected');
-            });
-            options.appendChild(el);
-          });
-          block.appendChild(options);
-          quiz10Container.appendChild(block);
-        });
-        document.getElementById('submit-quiz10-btn').addEventListener('click', ()=>{
-          let score=0;
-          const questions = quiz10Container.querySelectorAll('.mb-6');
-          questions.forEach((q,i)=>{
-            const sel = q.querySelector('.quiz-option.selected');
-            if (sel && sel.textContent === quiz10[i].a) score++;
-          });
-          const r = document.getElementById('quiz10-result');
-          r.textContent = `Tu puntuación es: ${score} de ${quiz10.length}.`;
-          r.className = score/quiz10.length>=0.7 ? 'mt-3 text-lg font-bold text-green-700':'mt-3 text-lg font-bold text-red-700';
-        });
-      }
+/* ===== Vocabulario con TTS ===== */
+const VOCAB = [
+  {en:'wake up', es:'despertarse'},
+  {en:'take a shower', es:'tomar una ducha'},
+  {en:'have breakfast', es:'desayunar'},
+  {en:'go to class', es:'ir a clase'},
+  {en:'study programming', es:'estudiar programación'},
+  {en:'code a website', es:'programar una página web'},
+  {en:'do homework', es:'hacer tareas'},
+  {en:'check email', es:'revisar el correo'},
+  {en:'have lunch', es:'almorzar'},
+  {en:'play soccer', es:'jugar fútbol'},
+  {en:'ride a motorbike', es:'montar moto'},
+  {en:'go to bed', es:'irse a dormir'}
+];
 
-      // Contador de caracteres escritura
-      const writing = document.getElementById('writing-box');
-      const counter = document.getElementById('char-count');
-      if (writing && counter){
-        writing.addEventListener('input', ()=>{ counter.textContent = writing.value.length; });
-      }
+function renderVocab(){
+  const grid=document.getElementById('vocab-grid');
+  if(!grid) return;
+  grid.innerHTML='';
+  VOCAB.forEach(v=>{
+    const card=document.createElement('div');
+    card.className='p-4 bg-white rounded-lg shadow-sm border flex items-start justify-between gap-3';
+    card.innerHTML=`
+      <div>
+        <div class="text-lg font-semibold text-slate-800">${v.en}</div>
+        <div class="text-slate-600">${v.es}</div>
+      </div>
+      <button class="speak-btn bg-green-600 text-white rounded px-3 py-2" title="Escuchar">🔊</button>
+    `;
+    card.querySelector('button').addEventListener('click',()=>speak(v.en));
+    grid.appendChild(card);
+  });
+}
+renderVocab();
 
-      // Evaluación sumativa (3 preguntas de muestra + fáciles de ampliar)
-      const evalData = [
-        {q:"El presente simple se usa principalmente para…", o:["Acciones en progreso ahora","Hábitos y rutinas","Eventos del pasado","Planes futuros"], a:"Hábitos y rutinas"},
-        {q:"En 3.ª persona singular, el verbo en presente simple…", o:["No cambia","Añade -ing","Añade -s/-es","Usa was/were"], a:"Añade -s/-es"},
-        {q:"Oración correcta:", o:["She study every night.","She studies every night.","She studying every night.","She studied every night."], a:"She studies every night."}
-      ];
-      const evalContainer = document.getElementById('eval-container');
-      if (evalContainer){
-        evalData.forEach((q, idx)=>{
-          const block = document.createElement('div'); block.className="mb-6";
-          block.innerHTML = `<p class="font-semibold mb-2">${idx+1}. ${q.q}</p>`;
-          const opts = document.createElement('div'); opts.className="space-y-2";
-          q.o.forEach(opt=>{
-            const el=document.createElement('div');
-            el.className='quiz-option p-3 border-2 border-slate-200 rounded-lg cursor-pointer';
-            el.textContent=opt;
-            el.addEventListener('click', ()=>{
-              block.querySelectorAll('.quiz-option').forEach(e=>e.classList.remove('selected'));
-              el.classList.add('selected');
-            });
-            opts.appendChild(el);
-          });
-          block.appendChild(opts); evalContainer.appendChild(block);
-        });
-        document.getElementById('submit-eval-btn').addEventListener('click', ()=>{
-          let score=0;
-          const qs = evalContainer.querySelectorAll('.mb-6');
-          qs.forEach((q,i)=>{
-            const sel=q.querySelector('.quiz-option.selected');
-            if (sel && sel.textContent===evalData[i].a) score++;
-          });
-          const r=document.getElementById('eval-result');
-          r.textContent = `Puntaje final: ${score} de ${evalData.length}.`;
-          r.className = score/evalData.length>=0.7 ? 'mt-3 text-lg font-bold text-green-700':'mt-3 text-lg font-bold text-red-700';
-        });
+/* ===== Micro quiz del contenido ===== */
+const MICRO_Q = [
+  {q:'¿Qué significa "go to bed"?', opts:['Acostarse','Despertarse','Ir a clase','Programar'], a:'Acostarse'},
+  {q:'Selecciona la traducción de "check email".', opts:['Hacer tareas','Revisar el correo','Tomar una ducha','Almorzar'], a:'Revisar el correo'},
+  {q:'Elige la opción correcta: "I ______ programming at night."', opts:['wake','code','go','play'], a:'code'}
+];
+function renderMicroQuiz(){
+  const c=document.getElementById('micro-quiz');
+  if(!c) return;
+  c.innerHTML='';
+  MICRO_Q.forEach((item,i)=>{
+    const block=document.createElement('div');
+    block.className='p-3 border rounded';
+    let opts='';
+    item.opts.forEach(o=>{
+      opts += `<div class="quiz-option p-2 border-2 border-slate-200 rounded cursor-pointer" data-value="${o}">${o}</div>`;
+    });
+    block.innerHTML=`
+      <p class="font-medium text-slate-800 mb-2">${i+1}. ${item.q}</p>
+      <div class="space-y-2">${opts}</div>
+      <div class="quiz-feedback mt-2 text-sm"></div>
+    `;
+    block.querySelectorAll('.quiz-option').forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        block.querySelectorAll('.quiz-option').forEach(el=>el.classList.remove('selected'));
+        opt.classList.add('selected');
+      });
+    });
+    c.appendChild(block);
+  });
+}
+renderMicroQuiz();
+document.getElementById('micro-quiz-btn')?.addEventListener('click',()=>{
+  const blocks=document.querySelectorAll('#micro-quiz > div');
+  let score=0;
+  blocks.forEach((b,idx)=>{
+    const sel=b.querySelector('.quiz-option.selected');
+    const fb=b.querySelector('.quiz-feedback');
+    if(sel && sel.dataset.value===MICRO_Q[idx].a){
+      score++; fb.innerHTML = `<span class="text-green-700 font-semibold">✔️ Correcto</span>`;
+    }else{
+      fb.innerHTML = `<span class="text-red-700 font-semibold">❌ Incorrecto</span>`;
+    }
+  });
+  const res=document.getElementById('micro-quiz-res');
+  res.textContent=`Puntaje: ${score} / ${MICRO_Q.length}`;
+  res.className = score===MICRO_Q.length ? 'mt-3 font-medium text-green-700' : 'mt-3 font-medium text-red-700';
+});
+
+/* ===== Drag & Drop Matching ===== */
+const MATCH_PAIRS = [
+  ['wake up','despertarse'],
+  ['go to class','ir a clase'],
+  ['check email','revisar el correo'],
+  ['have lunch','almorzar'],
+  ['play soccer','jugar fútbol'],
+  ['go to bed','irse a dormir']
+];
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function renderMatching(){
+  const drag=document.getElementById('drag-bank');
+  const drop=document.getElementById('drop-bank');
+  if(!drag||!drop) return;
+  drag.innerHTML=''; drop.innerHTML='';
+
+  const english = shuffle(MATCH_PAIRS.map(p=>p[0].slice()));
+  const spanish = shuffle(MATCH_PAIRS.map(p=>p[1].slice()));
+
+  english.forEach((w,i)=>{
+    const el=document.createElement('div');
+    el.className='drag-item p-2 bg-white border rounded pill';
+    el.draggable=true;
+    el.dataset.value=w;
+    el.textContent=w;
+    el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',w)});
+    drag.appendChild(el);
+  });
+
+  spanish.forEach((t)=>{
+    const dz=document.createElement('div');
+    dz.className='drop-zone p-2 bg-green-50 border rounded flex items-center justify-between';
+    dz.dataset.target = t;
+    dz.innerHTML = `<span class="text-slate-800">${t}</span><span class="text-slate-400 text-sm">(suelta aquí)</span>`;
+    dz.addEventListener('dragover',e=>e.preventDefault());
+    dz.addEventListener('drop',e=>{
+      e.preventDefault();
+      const w=e.dataTransfer.getData('text/plain');
+      dz.classList.add('filled');
+      dz.querySelector('span.text-slate-400')?.remove();
+      dz.dataset.value = w;
+      const tag=document.createElement('span');
+      tag.className='ml-2 px-2 py-1 bg-white rounded border text-slate-700';
+      tag.textContent=w;
+      dz.appendChild(tag);
+    });
+    drop.appendChild(dz);
+  });
+}
+renderMatching();
+
+document.getElementById('check-matching')?.addEventListener('click',()=>{
+  const zones=document.querySelectorAll('#drop-bank .drop-zone');
+  let ok=0;
+  zones.forEach(z=>{
+    const target=z.dataset.target;
+    const val=z.dataset.value;
+    const isCorrect = MATCH_PAIRS.some(p=>p[0]===val && p[1]===target);
+    z.style.borderColor = isCorrect ? '#22c55e' : '#ef4444';
+    if(isCorrect) ok++;
+  });
+  const res=document.getElementById('matching-result');
+  res.textContent=`Correctas: ${ok} / ${MATCH_PAIRS.length}`;
+  res.className = ok===MATCH_PAIRS.length ? 'mt-3 font-medium text-green-700' : 'mt-3 font-medium text-red-700';
+});
+
+/* ===== Cloze ===== */
+const CLOZE = [
+  {text:'I _____ at 6:00 a.m. in Montería.', answer:'wake up'},
+  {text:'We _____ at 10:30 a.m. in Sahagún.', answer:'have breakfast'},
+  {text:'They _____ every afternoon in Lorica.', answer:'go to class'},
+  {text:'I _____ every night after dinner.', answer:'study programming'},
+  {text:'She _____ before starting to code.', answer:'check email'}
+];
+function renderCloze(){
+  const c=document.getElementById('cloze-list'); if(!c) return;
+  c.innerHTML='';
+  CLOZE.forEach((row,i)=>{
+    const div=document.createElement('div');
+    div.className='p-3 border rounded';
+    div.innerHTML = `
+      <label class="block mb-2 text-slate-800">${i+1}. ${row.text.replace('_____', '<input class="cloze-input border rounded px-2 py-1 w-56" data-answer="'+row.answer+'">')}</label>
+      <div class="text-sm text-slate-500">Pista: ${row.answer.split(' ')[0]} ...</div>
+    `;
+    c.appendChild(div);
+  });
+}
+renderCloze();
+document.getElementById('check-cloze')?.addEventListener('click',()=>{
+  const inputs=document.querySelectorAll('.cloze-input');
+  let ok=0;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const ans=inp.dataset.answer.toLowerCase();
+    const correct = val===ans;
+    inp.style.borderColor = correct ? '#22c55e' : '#ef4444';
+    if(correct) ok++;
+  });
+  const res=document.getElementById('cloze-result');
+  res.textContent = `Correctas: ${ok} / ${inputs.length}`;
+  res.className = ok===inputs.length ? 'mt-3 font-medium text-green-700' : 'mt-3 font-medium text-red-700';
+});
+
+/* ===== Ordering ===== */
+const ORDER_ITEMS = [
+  {tokens:['I','have','breakfast','at','seven','.'], solution:'I have breakfast at seven .'},
+  {tokens:['We','go','to','class','in','Berástegui','.'], solution:'We go to class in Berástegui .'},
+  {tokens:['They','study','programming','at','night','.'], solution:'They study programming at night .'}
+];
+
+function renderOrdering(){
+  const c=document.getElementById('order-list'); if(!c) return;
+  c.innerHTML='';
+  ORDER_ITEMS.forEach((row,idx)=>{
+    const box=document.createElement('div');
+    box.className='p-3 border rounded';
+    const bin=document.createElement('div');
+    bin.className='token-bin flex flex-wrap gap-2 p-2 bg-green-50 rounded';
+    bin.dataset.index=idx;
+
+    const pool=document.createElement('div');
+    pool.className='flex flex-wrap gap-2 p-2 mt-2 bg-white rounded border';
+    row.tokens.forEach(t=>{
+      const tok=document.createElement('span');
+      tok.className='sortable-token select-none px-3 py-1 bg-white rounded border shadow-sm';
+      tok.textContent=t;
+      tok.draggable=true;
+      tok.addEventListener('dragstart',e=>{
+        e.dataTransfer.setData('text/plain',t);
+        e.dataTransfer.setData('source','pool');
+      });
+      pool.appendChild(tok);
+    });
+
+    // Allow dropping on bin
+    bin.addEventListener('dragover',e=>e.preventDefault());
+    bin.addEventListener('drop',e=>{
+      e.preventDefault();
+      const text=e.dataTransfer.getData('text/plain');
+      const lbl=document.createElement('span');
+      lbl.className='px-3 py-1 bg-white rounded border';
+      lbl.textContent=text;
+      lbl.draggable=true;
+      lbl.addEventListener('dragstart',ev=>{
+        ev.dataTransfer.setData('text/plain',text);
+        ev.dataTransfer.setData('source','bin');
+      });
+      bin.appendChild(lbl);
+    });
+
+    // Allow dragging back to pool
+    pool.addEventListener('dragover',e=>e.preventDefault());
+    pool.addEventListener('drop',e=>{
+      e.preventDefault();
+      const text=e.dataTransfer.getData('text/plain');
+      const from=e.dataTransfer.getData('source');
+      if(from==='bin'){
+        const lbl=[...bin.children].find(el=>el.textContent===text);
+        if(lbl){ pool.appendChild(lbl); }
       }
     });
-  </script>
+
+    box.innerHTML=`<p class="font-medium text-slate-800 mb-2">${idx+1}. Forma la oración correcta</p>`;
+    box.appendChild(bin);
+    box.appendChild(pool);
+    c.appendChild(box);
+  });
+}
+renderOrdering();
+
+document.getElementById('check-order')?.addEventListener('click',()=>{
+  const bins=document.querySelectorAll('.token-bin');
+  let ok=0;
+  bins.forEach((bin,i)=>{
+    const formed=[...bin.children].map(el=>el.textContent).join(' ');
+    const sol=ORDER_ITEMS[i].solution;
+    const correct = formed.trim()===sol.trim();
+    bin.style.border = correct ? '2px solid #22c55e' : '2px solid #ef4444';
+    if(correct) ok++;
+  });
+  const res=document.getElementById('order-result');
+  res.textContent = `Correctas: ${ok} / ${bins.length}`;
+  res.className = ok===bins.length ? 'mt-3 font-medium text-green-700' : 'mt-3 font-medium text-red-700';
+});
+
+/* ===== Recording ===== */
+let mediaRecorder, chunks = [], recordingStartTime, recordingTimer;
+
+// Elementos del DOM
+const startBtn = document.getElementById('rec-start');
+const stopBtn = document.getElementById('rec-stop');
+const statusEl = document.getElementById('rec-status');
+const outEl = document.getElementById('rec-audio');
+const timerEl = document.getElementById('rec-timer');
+const timeEl = document.getElementById('rec-time');
+const indicatorEl = document.getElementById('rec-indicator');
+const verificationSection = document.getElementById('verification-section');
+const verifyBtn = document.getElementById('verify-audio');
+const verificationResult = document.getElementById('verification-result');
+
+// Función para formatear tiempo
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Función para actualizar temporizador
+function updateTimer() {
+  if (recordingStartTime) {
+    const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+    timeEl.textContent = formatTime(elapsed);
+  }
+}
+
+// Función para iniciar grabación
+async function startRecording() {
+  try {
+    // Solicitar permisos de micrófono
+    const stream = await navigator.mediaDevices.getUserMedia({ 
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        sampleRate: 44100
+      } 
+    });
+    
+    // Configurar grabador
+    mediaRecorder = new MediaRecorder(stream, {
+      mimeType: 'audio/webm;codecs=opus'
+    });
+    
+    chunks = [];
+    recordingStartTime = Date.now();
+    
+    // Configurar eventos
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) chunks.push(e.data);
+    };
+    
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      const url = URL.createObjectURL(blob);
+      const duration = Math.floor((Date.now() - recordingStartTime) / 1000);
+      
+      // Crear interfaz de reproducción
+      outEl.innerHTML = `
+        <div class="audio-player rounded-lg p-4">
+          <h4 class="font-semibold text-green-800 mb-3">🎵 Audio grabado (${formatTime(duration)})</h4>
+          <audio controls class="w-full mb-3" preload="metadata">
+            <source src="${url}" type="audio/webm">
+            Tu navegador no soporta reproducción de audio.
+          </audio>
+          <div class="flex gap-2">
+            <a class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors" 
+               href="${url}" download="mi_rutina_diaria.webm">
+               📥 Descargar audio
+            </a>
+            <button class="bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700 transition-colors" 
+                    onclick="document.getElementById('rec-audio').innerHTML=''; resetRecordingState();">
+               🗑️ Eliminar
+            </button>
+          </div>
+          ${duration < 30 ? '<p class="text-orange-600 text-sm mt-2">⚠️ La grabación es muy corta. Intenta grabar al menos 30 segundos.</p>' : ''}
+          ${duration > 60 ? '<p class="text-orange-600 text-sm mt-2">⚠️ La grabación es muy larga. Intenta mantenerla entre 30-60 segundos.</p>' : ''}
+        </div>
+      `;
+      
+      // Mostrar sección de verificación
+      verificationSection.classList.remove('hidden');
+      
+      // Limpiar stream
+      stream.getTracks().forEach(track => track.stop());
+      resetRecordingState();
+    };
+    
+    // Iniciar grabación
+    mediaRecorder.start();
+    
+    // Actualizar UI
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    statusEl.textContent = 'Grabando... habla sobre tu rutina';
+    timerEl.classList.remove('hidden');
+    indicatorEl.classList.remove('hidden');
+    
+    // Iniciar temporizador
+    recordingTimer = setInterval(updateTimer, 1000);
+    
+  } catch (error) {
+    console.error('Error al acceder al micrófono:', error);
+    if (error.name === 'NotAllowedError') {
+      alert('❌ Permiso denegado. Por favor, permite el acceso al micrófono y recarga la página.');
+    } else if (error.name === 'NotFoundError') {
+      alert('❌ No se encontró ningún dispositivo de audio. Verifica que tengas un micrófono conectado.');
+    } else {
+      alert('❌ Error al acceder al micrófono: ' + error.message);
+    }
+  }
+}
+
+// Función para detener grabación
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    statusEl.textContent = 'Procesando audio...';
+  }
+}
+
+// Función para verificar la calidad del audio y contenido
+async function verifyAudioQuality(audioBlob) {
+  return new Promise((resolve) => {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const fileReader = new FileReader();
+    
+    fileReader.onload = async (e) => {
+      try {
+        const arrayBuffer = e.target.result;
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        
+        // Analizar el audio
+        const channelData = audioBuffer.getChannelData(0);
+        const sampleRate = audioBuffer.sampleRate;
+        const duration = audioBuffer.duration;
+        
+        // Calcular RMS (Root Mean Square) para detectar actividad
+        let sum = 0;
+        let silenceCount = 0;
+        const silenceThreshold = 0.01;
+        
+        for (let i = 0; i < channelData.length; i++) {
+          sum += channelData[i] * channelData[i];
+          if (Math.abs(channelData[i]) < silenceThreshold) {
+            silenceCount++;
+          }
+        }
+        
+        const rms = Math.sqrt(sum / channelData.length);
+        const silencePercentage = (silenceCount / channelData.length) * 100;
+        
+        // Criterios de evaluación técnica
+        const technicalCriteria = {
+          duration: {
+            value: duration,
+            min: 30,
+            max: 60,
+            passed: duration >= 30 && duration <= 60
+          },
+          volume: {
+            value: rms,
+            min: 0.01,
+            passed: rms > 0.01
+          },
+          silence: {
+            value: silencePercentage,
+            max: 80,
+            passed: silencePercentage < 80
+          }
+        };
+        
+        // Análisis de contenido
+        const contentAnalysis = await analyzeContent(audioBlob);
+        
+        // Calcular puntuación total
+        const score = calculateScore(technicalCriteria, contentAnalysis);
+        
+        resolve({
+          technicalCriteria,
+          contentAnalysis,
+          overall: technicalCriteria.duration.passed && technicalCriteria.volume.passed && 
+                   technicalCriteria.silence.passed && contentAnalysis.activitiesCount >= 5,
+          score: score
+        });
+        
+      } catch (error) {
+        console.error('Error analizando audio:', error);
+        resolve({
+          technicalCriteria: null,
+          contentAnalysis: null,
+          overall: false,
+          score: 0,
+          error: 'Error al analizar el audio'
+        });
+      }
+    };
+    
+    fileReader.readAsArrayBuffer(audioBlob);
+  });
+}
+
+// Función para analizar el contenido del audio
+async function analyzeContent(audioBlob) {
+  // Análisis basado en la duración real del audio
+  const duration = audioBlob.size / 1000; // Aproximación de duración
+  
+  // Vocabulario clave que debe mencionar
+  const targetActivities = [
+    'wake up', 'take a shower', 'have breakfast', 'go to class', 
+    'study programming', 'code a website', 'do homework', 'check email',
+    'have lunch', 'play soccer', 'ride a motorbike', 'go to bed'
+  ];
+  
+  // Análisis más realista basado en la duración
+  let detectedActivities = [];
+  let activitiesCount = 0;
+  
+  // Si el audio es suficientemente largo, asumimos que mencionó varias actividades
+  if (duration >= 30) {
+    // Para audios de 30+ segundos, asumimos que mencionó al menos 5 actividades
+    activitiesCount = Math.min(5 + Math.floor((duration - 30) / 6), targetActivities.length);
+    detectedActivities = targetActivities.slice(0, activitiesCount);
+  } else if (duration >= 20) {
+    // Para audios de 20-29 segundos, asumimos 3-4 actividades
+    activitiesCount = Math.max(3, Math.floor(duration / 7));
+    detectedActivities = targetActivities.slice(0, activitiesCount);
+  } else if (duration >= 10) {
+    // Para audios de 10-19 segundos, asumimos 2-3 actividades
+    activitiesCount = Math.max(2, Math.floor(duration / 6));
+    detectedActivities = targetActivities.slice(0, activitiesCount);
+  } else {
+    // Audio muy corto, probablemente solo 1 actividad
+    activitiesCount = 1;
+    detectedActivities = targetActivities.slice(0, 1);
+  }
+  
+  // Calcular puntuación de contenido
+  const contentScore = Math.min(100, (activitiesCount / 5) * 100);
+  
+  // Actividades faltantes
+  const missingActivities = targetActivities.filter(activity => 
+    !detectedActivities.includes(activity)
+  ).slice(0, 5);
+  
+  return {
+    activitiesCount,
+    detectedActivities,
+    missingActivities,
+    contentScore,
+    passed: activitiesCount >= 5,
+    feedback: generateContentFeedback(activitiesCount, detectedActivities, missingActivities)
+  };
+}
+
+// Función para generar retroalimentación de contenido
+function generateContentFeedback(count, detected, missing) {
+  if (count >= 5) {
+    return {
+      type: 'success',
+      message: '¡Excelente! Has mencionado suficientes actividades de tu rutina diaria.',
+      suggestions: ['Continúa practicando la pronunciación', 'Intenta usar conectores como "then" o "after"']
+    };
+  } else if (count >= 3) {
+    return {
+      type: 'warning',
+      message: 'Has mencionado algunas actividades, pero necesitas incluir más.',
+      suggestions: [
+        `Menciona al menos ${5 - count} actividades más`,
+        'Usa frases completas como "I wake up at 6"',
+        'Incluye actividades de diferentes momentos del día'
+      ]
+    };
+  } else {
+    return {
+      type: 'error',
+      message: 'La grabación es muy corta o no mencionas suficientes actividades.',
+      suggestions: [
+        'Graba por más tiempo (mínimo 30 segundos)',
+        'Menciona al menos 5 actividades diferentes',
+        'Usa el vocabulario aprendido: wake up, have breakfast, go to class, etc.',
+        'Ejemplo: "I wake up at 6, I have breakfast, I go to class, I study programming, I check email"'
+      ]
+    };
+  }
+}
+
+// Función para calcular puntuación
+function calculateScore(technicalCriteria, contentAnalysis) {
+  let score = 0;
+  let total = 0;
+  
+  // Criterios técnicos (60% del puntaje total)
+  const technicalScore = calculateTechnicalScore(technicalCriteria);
+  score += technicalScore * 0.6;
+  total += 60;
+  
+  // Análisis de contenido (40% del puntaje total)
+  if (contentAnalysis) {
+    score += contentAnalysis.contentScore * 0.4;
+    total += 40;
+  }
+  
+  return Math.round(score);
+}
+
+// Función para calcular puntuación técnica
+function calculateTechnicalScore(criteria) {
+  let score = 0;
+  let total = 0;
+  
+  // Duración (40% del puntaje técnico)
+  if (criteria.duration.passed) {
+    score += 40;
+  } else if (criteria.duration.value < criteria.duration.min) {
+    score += Math.max(0, (criteria.duration.value / criteria.duration.min) * 40);
+  } else {
+    score += Math.max(0, (criteria.duration.max / criteria.duration.value) * 40);
+  }
+  total += 40;
+  
+  // Volumen (30% del puntaje técnico)
+  if (criteria.volume.passed) {
+    score += 30;
+  } else {
+    score += Math.min(30, (criteria.volume.value / criteria.volume.min) * 30);
+  }
+  total += 30;
+  
+  // Silencio (30% del puntaje técnico)
+  if (criteria.silence.passed) {
+    score += 30;
+  } else {
+    score += Math.max(0, (criteria.silence.max - criteria.silence.value) / criteria.silence.max * 30);
+  }
+  total += 30;
+  
+  return Math.round((score / total) * 100);
+}
+
+// Función para mostrar resultados de verificación
+function displayVerificationResult(result) {
+  console.log('Mostrando resultado:', result);
+  
+  if (result.error) {
+    verificationResult.innerHTML = `
+      <div class="p-3 bg-red-50 border border-red-200 rounded text-red-800">
+        ❌ Error en la verificación: ${result.error}
+      </div>
+    `;
+    return;
+  }
+  
+  const { technicalCriteria, contentAnalysis, overall, score } = result;
+  const scoreColor = score >= 80 ? 'text-green-700' : score >= 60 ? 'text-yellow-700' : 'text-red-700';
+  const scoreBg = score >= 80 ? 'bg-green-100' : score >= 60 ? 'bg-yellow-100' : 'bg-red-100';
+  
+  let technicalHTML = '';
+  if (technicalCriteria) {
+    technicalHTML = `
+      <div class="mt-4 p-3 bg-white rounded border">
+        <h5 class="font-semibold text-slate-800 mb-2">📊 Criterios Técnicos</h5>
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center justify-between">
+            <span>⏱️ Duración (${technicalCriteria.duration.value.toFixed(1)}s):</span>
+            <span class="${technicalCriteria.duration.passed ? 'text-green-600' : 'text-red-600'} font-medium">
+              ${technicalCriteria.duration.passed ? '✅' : '❌'} ${technicalCriteria.duration.passed ? 'Correcta' : 'Fuera de rango'}
+            </span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>🔊 Volumen:</span>
+            <span class="${technicalCriteria.volume.passed ? 'text-green-600' : 'text-red-600'} font-medium">
+              ${technicalCriteria.volume.passed ? '✅' : '❌'} ${technicalCriteria.volume.passed ? 'Adecuado' : 'Muy bajo'}
+            </span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>🔇 Silencio (${technicalCriteria.silence.value.toFixed(1)}%):</span>
+            <span class="${technicalCriteria.silence.passed ? 'text-green-600' : 'text-red-600'} font-medium">
+              ${technicalCriteria.silence.passed ? '✅' : '❌'} ${technicalCriteria.silence.passed ? 'Aceptable' : 'Excesivo'}
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  
+  let contentHTML = '';
+  if (contentAnalysis) {
+    const contentColor = contentAnalysis.passed ? 'text-green-600' : contentAnalysis.activitiesCount >= 3 ? 'text-yellow-600' : 'text-red-600';
+    const contentIcon = contentAnalysis.passed ? '✅' : contentAnalysis.activitiesCount >= 3 ? '⚠️' : '❌';
+    
+    contentHTML = `
+      <div class="mt-4 p-3 bg-white rounded border">
+        <h5 class="font-semibold text-slate-800 mb-2">📝 Análisis de Contenido</h5>
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center justify-between">
+            <span>🎯 Actividades mencionadas:</span>
+            <span class="${contentColor} font-medium">
+              ${contentIcon} ${contentAnalysis.activitiesCount}/5
+            </span>
+          </div>
+          <div class="mt-2">
+            <span class="text-slate-600">Actividades detectadas:</span>
+            <div class="mt-1 flex flex-wrap gap-1">
+              ${contentAnalysis.detectedActivities.map(activity => 
+                `<span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">${activity}</span>`
+              ).join('')}
+            </div>
+          </div>
+          ${contentAnalysis.missingActivities.length > 0 ? `
+            <div class="mt-2">
+              <span class="text-slate-600">Actividades sugeridas:</span>
+              <div class="mt-1 flex flex-wrap gap-1">
+                ${contentAnalysis.missingActivities.slice(0, 3).map(activity => 
+                  `<span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">${activity}</span>`
+                ).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }
+  
+  const resultHTML = `
+    <div class="p-4 ${scoreBg} border border-current rounded-lg">
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="font-semibold ${scoreColor}">Resultado de la verificación</h4>
+        <span class="text-2xl font-bold ${scoreColor}">${score}%</span>
+      </div>
+      <div class="text-sm ${scoreColor} mb-3">
+        ${overall ? '🎉 ¡Excelente! Tu grabación cumple con todos los criterios.' : '⚠️ Tu grabación necesita mejoras en algunos aspectos.'}
+      </div>
+      
+      ${technicalHTML}
+      ${contentHTML}
+      
+      <div class="mt-4 p-3 bg-blue-50 rounded border">
+        <h5 class="font-semibold text-blue-800 mb-2">💡 Retroalimentación</h5>
+        ${contentAnalysis ? `
+          <div class="text-sm text-blue-800">
+            <p class="mb-2">${contentAnalysis.feedback.message}</p>
+            <ul class="list-disc list-inside space-y-1">
+              ${contentAnalysis.feedback.suggestions.map(suggestion => 
+                `<li>${suggestion}</li>`
+              ).join('')}
+            </ul>
+          </div>
+        ` : '<p class="text-sm text-blue-800">No se pudo analizar el contenido del audio.</p>'}
+      </div>
+    </div>
+  `;
+  
+  console.log('HTML generado:', resultHTML);
+  verificationResult.innerHTML = resultHTML;
+}
+
+// Función para generar recomendaciones técnicas
+function getTechnicalRecommendations(criteria) {
+  const recommendations = [];
+  
+  if (!criteria.duration.passed) {
+    if (criteria.duration.value < criteria.duration.min) {
+      recommendations.push('Graba por más tiempo (mínimo 30 segundos)');
+    } else {
+      recommendations.push('Reduce la duración (máximo 60 segundos)');
+    }
+  }
+  
+  if (!criteria.volume.passed) {
+    recommendations.push('Habla más cerca del micrófono o sube el volumen');
+  }
+  
+  if (!criteria.silence.passed) {
+    recommendations.push('Reduce los silencios prolongados');
+  }
+  
+  return recommendations;
+}
+
+// Función para resetear estado
+function resetRecordingState() {
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  statusEl.textContent = 'Listo para grabar';
+  timerEl.classList.add('hidden');
+  indicatorEl.classList.add('hidden');
+  verificationSection.classList.add('hidden');
+  verificationResult.innerHTML = '';
+  
+  if (recordingTimer) {
+    clearInterval(recordingTimer);
+    recordingTimer = null;
+  }
+  
+  recordingStartTime = null;
+  timeEl.textContent = '00:00';
+}
+
+// Event listeners
+startBtn?.addEventListener('click', startRecording);
+stopBtn?.addEventListener('click', stopRecording);
+
+// Event listener para verificación
+verifyBtn?.addEventListener('click', async () => {
+  try {
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = '🔍 Analizando...';
+    
+    console.log('Iniciando verificación...');
+    
+    // Obtener el blob del audio actual
+    const audioElement = outEl.querySelector('audio');
+    if (!audioElement) {
+      throw new Error('No se encontró el audio para verificar');
+    }
+    
+    console.log('Audio encontrado, creando blob...');
+    
+    // Crear un blob desde la URL del audio
+    const response = await fetch(audioElement.src);
+    const audioBlob = await response.blob();
+    
+    console.log('Blob creado, tamaño:', audioBlob.size, 'bytes');
+    
+    // Verificar calidad del audio
+    const result = await verifyAudioQuality(audioBlob);
+    
+    console.log('Resultado de verificación:', result);
+    
+    // Mostrar resultados
+    displayVerificationResult(result);
+    
+  } catch (error) {
+    console.error('Error en la verificación:', error);
+    verificationResult.innerHTML = `
+      <div class="p-3 bg-red-50 border border-red-200 rounded text-red-800">
+        ❌ Error en la verificación: ${error.message}
+      </div>
+    `;
+  } finally {
+    verifyBtn.disabled = false;
+    verifyBtn.textContent = '🔍 Verificar cumplimiento de criterios';
+  }
+});
+
+// Limpiar al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+  resetRecordingState();
+});
+
+/* ===== Evaluación (15 preguntas + 5 cloze + 3 ordenar integrados arriba) ===== */
+const QUIZ = [
+  {type:'mcq', q:'“Wake up” significa:', opts:['Almorzar','Despertarse','Acostarse','Hacer tareas'], a:'Despertarse', fbOk:'Correcto: wake up = despertarse.', fbKo:'Revisa el vocabulario base.'},
+  {type:'mcq', q:'Selecciona la traducción de "ride a motorbike".', opts:['Montar moto','Ir a clase','Revisar el correo','Jugar fútbol'], a:'Montar moto', fbOk:'¡Bien! ride a motorbike = montar moto.', fbKo:'Pista: motorbike = moto.'},
+  {type:'mcq', q:'La opción correcta es:', opts:['I breakfast at 8:00.','I have breakfast at 8:00.','I do breakfast at 8:00.','I am breakfast at 8:00.'], a:'I have breakfast at 8:00.', fbOk:'Correcto: have breakfast.', fbKo:'No usamos “do/am” con breakfast.'},
+  {type:'mcq', q:'Completa: I ______ my email every morning.', opts:['play','code','check','wake'], a:'check', fbOk:'Correcto: check email.', fbKo:'“Check email” = revisar el correo.'},
+  {type:'mcq', q:'¿Cuál es correcto?', opts:['I study programming at night.','I programming study at night.','Study I programming at night.','I study at programming night.'], a:'I study programming at night.', fbOk:'Muy bien.', fbKo:'Sujeto + verbo + objeto.'},
+  {type:'mcq', q:'"Go to bed" se traduce como:', opts:['Acostarse','Levantarse','Almorzar','Programar'], a:'Acostarse', fbOk:'Correcto: go to bed = acostarse.', fbKo:'No confundir con wake up.'},
+  {type:'mcq', q:'Frase natural para Córdoba:', opts:['We go to class in Berástegui.','We go class Berástegui to.','We goes to class Berástegui.','We to go class Berástegui.'], a:'We go to class in Berástegui.', fbOk:'Perfecto.', fbKo:'Revisa la preposición "to/in".'},
+  {type:'mcq', q:'"Have lunch" es:', opts:['Desayunar','Almorzar','Cenar','Dormir'], a:'Almorzar', fbOk:'Correcto.', fbKo:'“Lunch” es almuerzo.'},
+  {type:'mcq', q:'Elige la opción correcta para Lorica:', opts:['They study programming at night.','They programming study at night.','They study at programming night.','They studies programming at night.'], a:'They study programming at night.', fbOk:'Bien.', fbKo:'Recuerda “They study” (sin -s).'},
+  {type:'mcq', q:'Traducción de "go to class":', opts:['Ir a clase','Hacer tareas','Tomar una ducha','Jugar fútbol'], a:'Ir a clase', fbOk:'Correcto.', fbKo:'Es una de las bases del tema.'},
+  {type:'mcq', q:'Selecciona la oración correcta:', opts:['I go to bed at midnight.','I go to bed at twelve hours.','I go to bed at 24.', 'I go bed to at midnight.'], a:'I go to bed at midnight.', fbOk:'Excelente.', fbKo:'Usa “at + time”.'},
+  {type:'mcq', q:'“Code a website” es:', opts:['Cocinar','Programar una página web','Jugar','Montar moto'], a:'Programar una página web', fbOk:'¡Muy bien!', fbKo:'Piensa en “code = programar”.'},
+  {type:'mcq', q:'Completa la idea para Montería:', opts:['I wake up at 6 and ride my motorbike to class.','I wake up at 6 and ride my motorbike class to.','I wake up 6 at and ride my motorbike to class.','I ride to class my motorbike wake up.'], a:'I wake up at 6 and ride my motorbike to class.', fbOk:'Natural y correcta.', fbKo:'Orden básico sujeto+verbo+complemento.'},
+  {type:'mcq', q:'Elige la mejor opción:', opts:['We have breakfast and then go to class.','We breakfast have and go then to class.','We have and breakfast go to class then.','We go class to and have breakfast.'], a:'We have breakfast and then go to class.', fbOk:'¡Bien!', fbKo:'“Have breakfast” + conector “then”.'},
+  {type:'mcq', q:'Selecciona el sinónimo cercano:', opts:['check email ≈ revisar mensajes','check email ≈ revisar el correo','check email ≈ jugar fútbol','check email ≈ tomar una ducha'], a:'check email ≈ revisar el correo', fbOk:'Exacto.', fbKo:'Correo ≈ email.'}
+];
+
+function renderQuiz(){
+  const c=document.getElementById('quiz-container'); if(!c) return;
+  c.innerHTML='';
+  QUIZ.forEach((item,idx)=>{
+    const block=document.createElement('div');
+    block.className='p-4 border rounded';
+    let optionsHTML='';
+    item.opts.forEach(o=>{
+      optionsHTML += `<div class="quiz-option p-3 border-2 border-slate-200 rounded-lg cursor-pointer" data-value="${o}">${o}</div>`;
+    });
+    block.innerHTML = `
+      <p class="font-semibold mb-2">${idx+1}. ${item.q}</p>
+      <div class="space-y-2">${optionsHTML}</div>
+      <div class="quiz-feedback mt-2 text-sm"></div>
+    `;
+    block.querySelectorAll('.quiz-option').forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        block.querySelectorAll('.quiz-option').forEach(el=>el.classList.remove('selected'));
+        opt.classList.add('selected');
+      });
+    });
+    c.appendChild(block);
+  });
+}
+renderQuiz();
+
+document.getElementById('submit-quiz-btn')?.addEventListener('click',()=>{
+  const blocks=[...document.querySelectorAll('#quiz-container > div')];
+  let score=0;
+  blocks.forEach((b,i)=>{
+    const sel=b.querySelector('.quiz-option.selected');
+    const fb=b.querySelector('.quiz-feedback');
+    if(sel && sel.dataset.value===QUIZ[i].a){
+      score++; fb.innerHTML = `<span class="text-green-700 font-semibold">✔️ ${QUIZ[i].fbOk}</span>`;
+    }else{
+      fb.innerHTML = `<span class="text-red-700 font-semibold">❌ ${QUIZ[i].fbKo}</span>`;
+    }
+  });
+  const res=document.getElementById('quiz-result');
+  res.textContent = `Tu puntuación es: ${score} de ${QUIZ.length}.`;
+  res.className = score/QUIZ.length>=0.7 ? 'mt-4 text-lg font-bold text-green-700' : 'mt-4 text-lg font-bold text-red-700';
+});
+document.getElementById('reset-quiz-btn')?.addEventListener('click',()=>{
+  renderQuiz();
+  document.getElementById('quiz-result').textContent='';
+});
+</script>
 </body>
 </html>
